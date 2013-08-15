@@ -24,4 +24,5 @@
 	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.3);
 	border: none;
 	font-size: 11px;
+	cursor: pointer;
 }
