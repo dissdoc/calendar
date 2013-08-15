@@ -1,0 +1,27 @@
+#panel {
+	padding: 20px 40px 60px 40px;
+	color: #222;
+}
+
+#panel .month {
+	list-style-type: none;	
+}
+
+#panel .month li {
+	padding-right: 5px;
+}
+
+#panel .month .month-title {
+	font-size: 18px !important;
+}
+
+#panel .month button {
+	background: #fff;
+	color: #666;
+	padding: 2px 6px;
+	-moz-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.3);
+	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.3);
+	border: none;
+	font-size: 11px;
+}

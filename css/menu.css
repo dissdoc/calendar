@@ -15,6 +15,8 @@
 	color: #fff;
 	font-weight: bold;
 	text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3); 
 	box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3); 
 }
 
@@ -22,6 +24,8 @@
 	border: 1px solid #ddd;
 	width: 220px;
 	padding: 5px;
+	-moz-box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
 	box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
 }
 
