@@ -4,12 +4,13 @@
 }
 
 body {
-	background: #fff;	
+	background: #d5e2f7;	
 }
 
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
+	background: #fff;
 }
 
 .left {
