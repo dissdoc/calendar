@@ -15,20 +15,28 @@
 			   this.year;
 	};
 
-	Calendar.Dater.Datetime.prototype.getCurrentDay = function() {
+	Calendar.Dater.Datetime.prototype.getDay = function() {
 		return this.day;
-	}
+	};
 
-	Calendar.Dater.Datetime.prototype.getDays = function() {
+	Calendar.Dater.Datetime.prototype.getMonth = function() {
+		return this.month;
+	};
+
+	Calendar.Dater.Datetime.prototype.getYear = function() {
+		return this.year;
+	};
+
+	Calendar.Dater.Datetime.prototype.getDays = function(year, month, day) {
 		var days = [];
 
-		var count = new Date(this.year, this.month+1, 0).getDate();
+		var count = new Date(year, month+1, 0).getDate();
 		
-		var point = new Date(this.year, this.month, 1).getDay();
+		var point = new Date(year, month, 1).getDay();
 		if (point == 0) point = 7;
 
 		if (point != 1) {
-			var last_month_days = new Date(this.year, this.month, 0).getDate();
+			var last_month_days = new Date(year, month, 0).getDate();
 			for (var d = (last_month_days - (point - 1)) + 1; d <= last_month_days; d++)
 				days.push(d);
 		}
@@ -47,6 +55,6 @@
 		}
 
 		return days;
-	}
+	};
 	
 }());
