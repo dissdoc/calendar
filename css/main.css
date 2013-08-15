@@ -11,3 +11,21 @@ body {
 	width: 960px;
 	margin: 0 auto;
 }
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.radius {
+	border-radius: 2px;
+  -webkir-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
