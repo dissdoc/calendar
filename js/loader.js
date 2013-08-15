@@ -6,7 +6,7 @@
 		this._parent = document.getElementById(id);
 		this.dayOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 
 		'Суббота', 'Воскресенье'];
-	}
+	};
 
 	/**
 	 * Append your elements on panel
@@ -41,9 +41,9 @@
 
 			this._parent.appendChild(tr);
 		}		
-	}
+	};
 
-	Calendar.Loader.HtmlLoader.prototype.initDays = function() {
+	Calendar.Loader.HtmlLoader.prototype.initDaysOfWeek = function() {
 		var cells = this._parent.rows[0].cells;
 
 		for (var column = 0; column < cells.length; column++) {
@@ -53,6 +53,6 @@
 			div.appendChild(span);
 			cells[column].appendChild(div);
 		}
-	}
+	};
 
 }());
