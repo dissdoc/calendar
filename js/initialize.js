@@ -59,7 +59,7 @@ currentBtn.addEventListener('click', function(e) {
 
 /* Popup under buttons */
 var addIdea = document.getElementById('add-idea');
-var popupTop = document.getElementsByClassName('popup-top')[0];
+var popupTop = document.getElementById('fast-add-idea');
 var closeTop = popupTop.getElementsByClassName('close')[0];
 var addBtn = popupTop.getElementsByClassName('create')[0];
 
