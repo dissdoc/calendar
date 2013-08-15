@@ -37,3 +37,22 @@ body {
 .shift-right {
 	margin-right: 5px;
 }
+
+.shift-top {
+	margin-top: 10px;
+}
+
+.empty {
+	padding: 2px;
+}
+
+input[type=text] {
+	border: 1px solid #ddd;
+	width: 220px;
+	padding: 5px;
+	-moz-box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
+	box-shadow: inset 0px 2px 6px -3px rgba(0,0,0,1);
+	width: 240px;
+}
+

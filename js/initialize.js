@@ -53,3 +53,25 @@ currentBtn.addEventListener('click', function(e) {
 	calendar.fillDays(date.getDays(year, month, day), day);	
 	headerMonth.innerText = date.getHeaderDate(month, year);
 });
+
+
+/* Popup under buttons */
+var addIdea = document.getElementById('add-idea');
+var popupTop = document.getElementsByClassName('popup-top')[0];
+var closeTop = popupTop.getElementsByClassName('close')[0];
+var addBtn = popupTop.getElementsByClassName('create')[0];
+
+addIdea.addEventListener('click', function(e) {
+	popupTop.style.display = 'block';
+	addIdea.className = addIdea.className + ' under-button'; 
+});
+
+closeTop.addEventListener('click', function(e) {
+	popupTop.style.display = 'none';
+	addIdea.className = 'action border';
+});
+
+addBtn.addEventListener('click', function(e) {
+	popupTop.style.display = 'none';
+	addIdea.className = 'action border';
+});

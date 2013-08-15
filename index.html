@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/menu.css">
 	<link rel="stylesheet" type="text/css" href="css/panel.css">
 	<link rel="stylesheet" type="text/css" href="css/calendar.css">
+	<link rel="stylesheet" type="text/css" href="css/popup.css">
 </head>
 <body>
 
@@ -16,8 +17,20 @@
 	<div id="nav">
 
 		<div class="buttons left">
-			<button class="radius">Добавить</button>
-			<button class="radius">Обновить</button>			
+			<button class="action radius" id="add-idea">Добавить</button>
+
+			<div class="popup-top radius">
+				<div class="close right">x</div>
+				<div class="clear"></div>
+
+				<div class="context">
+					<input type="text" placeholder="5 марта, 14:00, День рождения" class="radius">
+					<button class="shift-top empty create">Создать</button>
+				</div>
+
+			</div>
+
+			<button class="action radius">Обновить</button>			
 		</div>
 
 		<div class="search right">
