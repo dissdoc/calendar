@@ -15,6 +15,7 @@ calendar.fillDays(date.getDays(year, month, day), day);
 
 var rightBtn = document.getElementById('right-button');
 var leftBtn = document.getElementById('left-button');
+var currentBtn = document.getElementById('current-button');
 
 rightBtn.addEventListener('click', function(e) {
 	if (month == 11) {
@@ -39,5 +40,16 @@ leftBtn.addEventListener('click', function(e) {
 	calendar.clearDays();
 	calendar.initDaysOfWeek();
 	calendar.fillDays(date.getDays(year, month, day), 0);
+	headerMonth.innerText = date.getHeaderDate(month, year);
+});
+
+currentBtn.addEventListener('click', function(e) {
+	day = date.getDay();
+	month = date.getMonth();
+	year = date.getYear();	
+
+	calendar.clearDays();
+	calendar.initDaysOfWeek();
+	calendar.fillDays(date.getDays(year, month, day), day);	
 	headerMonth.innerText = date.getHeaderDate(month, year);
 });
