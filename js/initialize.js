@@ -5,5 +5,4 @@ calendar.initDaysOfWeek();
 var date = new Calendar.Dater.Datetime();
 document.getElementsByClassName('month-title')[0].innerText = date.getHeaderDate();
 
-var array = date.getDays();
-calendar.fillDays(array);
+calendar.fillDays(date.getDays(), date.getCurrentDay());

@@ -10,16 +10,14 @@
 		this.day = this.current_date.getDate();		
 	};
 
-	Calendar.Dater.Datetime.prototype.getCurrentTime = function() {
-		return this.day + "-" +
-			   Calendar.months[this.month] + "-" +
-			   this.year;
-	};
-
 	Calendar.Dater.Datetime.prototype.getHeaderDate = function() {
 		return Calendar.months[this.month] + " " +
 			   this.year;
 	};
+
+	Calendar.Dater.Datetime.prototype.getCurrentDay = function() {
+		return this.day;
+	}
 
 	Calendar.Dater.Datetime.prototype.getDays = function() {
 		var days = [];

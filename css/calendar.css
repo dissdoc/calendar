@@ -9,7 +9,11 @@
 	border: 1px solid #ddd;
 	vertical-align: top;
   	text-align: left;
-  	padding: 4px;
+  	padding: 4px;  	
+}
+
+#calendar .current-date {
+	background: #eee;
 }
 
 #calendar td.item:hover {
