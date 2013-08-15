@@ -13,6 +13,8 @@ headerMonth.innerText = date.getHeaderDate(month, year);
 
 calendar.fillDays(date.getDays(year, month, day), day);
 
+var storage = new Calendar.Storage.Stream();
+
 var rightBtn = document.getElementById('right-button');
 var leftBtn = document.getElementById('left-button');
 var currentBtn = document.getElementById('current-button');

@@ -7,6 +7,7 @@ This module fill calendar panels
 	window.Calendar = {
 		Loader: {},
 		Dater: {},
+		Storage: {},
 		
 		dayOfWeek: ['Понедельник', 
 					'Вторник',  
