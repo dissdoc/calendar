@@ -1,0 +1,32 @@
+#calendar {
+	margin-top: 10px;
+	border-collapse: collapse;	
+}
+
+#calendar td.item {
+	width: 116px;
+	height: 116px;
+	border: 1px solid #ddd;
+	vertical-align: top;
+  	text-align: left;
+  	padding: 4px;
+}
+
+#calendar td.item:hover {
+	-moz-box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3); 
+	box-shadow: 0 4px 3px -3px rgba(0,0,0,0.3);
+}
+
+#calendar td.item div {
+	font-size: 11px;	
+	color: #444;
+}
+
+#calendar td.item div span {
+	color: #999;
+}
+
+#calendar td.item div span.checked {
+	font-weight: bold;
+}
