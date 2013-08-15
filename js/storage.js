@@ -28,6 +28,8 @@
 	Calendar.Storage.Stream.prototype.read = function(key) {
 		if (!this.storage) return null;
 
+		for (var key in localStorage)
+			console.log(key);
 		return localStorage.getItem(key);
 	};
 
