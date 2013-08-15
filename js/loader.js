@@ -1,7 +1,9 @@
+/**
+ * Модуль работы с календарем во View
+ */
+
 (function() {
-	/** 
-	 * Constructor. Set your panel for calendar
-	 */
+	
 	Calendar.Loader.HtmlLoader = function(id) {
 		this._parent = document.getElementById(id);
 	};
@@ -61,7 +63,7 @@
 				if (rows == 0) {					
 					var span = el.getElementsByTagName('span')[0];
 					span.innerText = span.innerText + " " + value;
-					
+
 					if (value < 8 && value == day) {
 						el.className = el.className + ' current-date';
 					} 
@@ -78,6 +80,17 @@
 				}
 			}
 		}		
+	};
+
+	Calendar.Loader.HtmlLoader.prototype.clearDays = function() {
+		for (var rows = 0; rows < 5; rows++) {
+			for (var columns = 0; columns < 7; columns++) {
+				var el = this._parent.rows[rows].cells[columns];
+				el.innerText = '';
+				el.className = 'item';
+					
+			}
+		}
 	};
 
 }());

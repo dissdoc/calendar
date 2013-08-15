@@ -10,9 +10,8 @@
 		this.day = this.current_date.getDate();		
 	};
 
-	Calendar.Dater.Datetime.prototype.getHeaderDate = function() {
-		return Calendar.months[this.month] + " " +
-			   this.year;
+	Calendar.Dater.Datetime.prototype.getHeaderDate = function(month, year) {
+		return Calendar.months[month] + " " + year;
 	};
 
 	Calendar.Dater.Datetime.prototype.getDay = function() {
@@ -43,13 +42,14 @@
 
 		for (var d = 1; d <= count; d++) 
 			days.push(d);
-		
-		if (days.length > 35) {
-			for (var i = 35; i < days.length; i++) {
+
+		var length = days.length;
+		if (length > 35) {
+			for (var i = 35; i < length; i++) {
 				days.pop();
 			}
-		} else if (days.length < 35) {
-			for (var i = 1; i <= 35 - days.length; i++) {
+		} else if (length < 35) {
+			for (var i = 1; i <= 35 - length; i++) {
 				days.push(i);
 			}
 		}
