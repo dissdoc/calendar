@@ -4,8 +4,6 @@
 	 */
 	Calendar.Loader.HtmlLoader = function(id) {
 		this._parent = document.getElementById(id);
-		this.dayOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 
-		'Суббота', 'Воскресенье'];
 	};
 
 	/**
@@ -48,11 +46,29 @@
 
 		for (var column = 0; column < cells.length; column++) {
 			var span = document.createElement('span');
-			span.innerText = this.dayOfWeek[column] + ", ";
+			span.innerText = Calendar.dayOfWeek[column] + ",";
 			var div = document.createElement('div');
 			div.appendChild(span);
 			cells[column].appendChild(div);
 		}
 	};
+
+	Calendar.Loader.HtmlLoader.prototype.fillDays = function(array) {
+		for (var rows = 0; rows < 5; rows++) {
+			for (var columns = 0; columns < 7; columns++) {
+				var el = this._parent.rows[rows].cells[columns];				
+				if (rows == 0) {					
+					var span = el.getElementsByTagName('span')[0];
+					span.innerText = span.innerText + " " + array.shift();
+				} else {
+					var span = document.createElement('span');
+					span.innerText = array.shift();
+					var div = document.createElement('div');
+					div.appendChild(span);
+					el.appendChild(div);
+				}
+			}
+		}		
+	}
 
 }());
