@@ -128,10 +128,7 @@
 
 		for (var i = start_index; i < this.cash_cells.length; i++) {
 			var cell = this.cash_cells[i];
-			console.log(cell.value + "  " + d);
 			if (cell.value == d) {
-				console.log('here');
-
 				var div = document.createElement('div');
 				var header = document.createElement('strong');
 				header.innerText = data.message;
@@ -143,8 +140,53 @@
 		}
 	};
 
-	Calendar.Loader.HtmlLoader.prototype.fillAllIdeas = function() {
+	Calendar.Loader.HtmlLoader.prototype.fillAllIdeas = function(month, year, storage) {
+		var days = new Date(year, month, 0).getDate();
+		
+		var start_index = 0;
 
+		// Find need cell start
+		for (var item in this.cash_cells) {
+			var cell = this.cash_cells[item];
+			if (item == 0 && cell.value > 1) {
+				continue;
+			}
+
+			if (cell.value == 1) {
+				start_index = item;
+				break;
+			}
+		}	
+
+		var current_day = 1;
+		for (var i = start_index; i < this.cash_cells.length; i++) {
+			if (current_day == days) break;
+			
+			var cell = this.cash_cells[i];
+			var dataStorage = storage.read(current_day + '-' + month + '-' + year);
+			if (dataStorage != null) {
+				var data = JSON.parse(dataStorage);
+
+				var div = document.createElement('div');
+				
+				var header = document.createElement('strong');
+				header.innerText = data.message;
+				div.appendChild(header);
+
+				var p1 = document.createElement('p');
+				p1.innerText = data.people;
+				div.appendChild(p1);
+
+				var p2 = document.createElement('p');
+				p2.innerText = data.description;
+				div.appendChild(p2);
+
+				cell.element.appendChild(div);
+				cell.element.className = cell.element.className + ' idea';
+			}
+
+			current_day++;
+		}		
 	};
 
 }());

@@ -3,6 +3,8 @@ calendar.generate();
 calendar.initDaysOfWeek();
 
 var date = new Calendar.Dater.Datetime();
+var parser = new Calendar.Dater.Parser();
+var storage = new Calendar.Storage.Stream();
 
 var day = date.getDay();
 var month = date.getMonth();
@@ -12,8 +14,7 @@ var headerMonth = document.getElementsByClassName('month-title')[0];
 headerMonth.innerText = date.getHeaderDate(month, year);
 
 calendar.fillDays(date.getDays(year, month, day), day);
-
-var storage = new Calendar.Storage.Stream();
+calendar.fillAllIdeas(month, year, storage);
 
 var rightBtn = document.getElementById('right-button');
 var leftBtn = document.getElementById('left-button');
@@ -26,10 +27,14 @@ rightBtn.addEventListener('click', function(e) {
 	} else {
 		month++;
 	}
+
+	var DAY = month == date.getMonth() ? date.getDay() : 0;
+
 	calendar.clearDays();
 	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), 0);	
-	headerMonth.innerText = date.getHeaderDate(month, year);	
+	calendar.fillDays(date.getDays(year, month, day), DAY);	
+	headerMonth.innerText = date.getHeaderDate(month, year);
+	calendar.fillAllIdeas(month, year, storage);	
 });
 
 leftBtn.addEventListener('click', function(e) {
@@ -39,10 +44,14 @@ leftBtn.addEventListener('click', function(e) {
 	} else {
 		month--;
 	}
+
+	var DAY = month == date.getMonth() ? date.getDay() : 0;
+
 	calendar.clearDays();
 	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), 0);
+	calendar.fillDays(date.getDays(year, month, day), DAY);
 	headerMonth.innerText = date.getHeaderDate(month, year);
+	calendar.fillAllIdeas(month, year, storage);
 });
 
 currentBtn.addEventListener('click', function(e) {
@@ -54,9 +63,8 @@ currentBtn.addEventListener('click', function(e) {
 	calendar.initDaysOfWeek();
 	calendar.fillDays(date.getDays(year, month, day), day);	
 	headerMonth.innerText = date.getHeaderDate(month, year);
+	calendar.fillAllIdeas(month, year, storage);
 });
-
-var parser = new Calendar.Dater.Parser();
 
 /* Popup under buttons */
 var addIdea = document.getElementById('add-idea');
