@@ -101,6 +101,34 @@
 
 		if (jsonData.month == month && jsonData.year == year && jsonData.day == day)
 			cell.className = cell.className + ' current-date';
+
+		cell.appendChild(div);
+
+		var dataStorage = storage.read(jsonData.day + '-' + jsonData.month + '-' + jsonData.year);
+		if (dataStorage == null) return;
+
+		cell.className = cell.className + ' idea';
+
+		var json = JSON.parse(dataStorage);
+
+		div = document.createElement('div');
+				
+		var header = document.createElement('strong');
+		header.innerText = json.message;
+		div.appendChild(header);
+
+		if (json.people != null) {
+			var p1 = document.createElement('p');
+			p1.innerText = json.people;
+			div.appendChild(p1);
+		}
+
+		if (json.description != null) {
+			var p2 = document.createElement('p');
+			p2.innerText = json.description;
+			div.appendChild(p2);		
+		}
+
 		cell.appendChild(div);
 	}
 	

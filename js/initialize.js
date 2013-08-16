@@ -114,6 +114,12 @@ var closeLeft = popupLeft.getElementsByClassName('close')[0];
 var deleteBtn = document.getElementById('delete-full-idea');
 var createBtn = document.getElementById('create-full-idea');
 
+var inputMessage = document.getElementById('message-full');
+var inputPeople = document.getElementById('people-full');
+var inputDescription = document.getElementById('description-full');
+var message = document.getElementById('message-of-calendar');	
+var people = document.getElementById('people-of-calendar');	
+
 closeLeft.addEventListener('click', function(e) {
 	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
 	popupLeft.style.display = 'none';
@@ -127,23 +133,64 @@ deleteBtn.addEventListener('click', function(e) {
 	popupLeft.style.display = 'none';
 });
 
-var inputMessage = document.getElementById('message-full');
-var inputPeople = document.getElementById('people-full');
-var inputDescription = document.getElementById('description-full');
+createBtn.addEventListener('click', function(e) {
+	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
+	var data = storage.read(GLOBAL_KEY);
+	var json = JSON.parse(data);
+
+	data = {
+		'message': inputMessage.value,
+		'people': inputPeople.value,
+		'description': inputDescription.value
+	};
+
+	storage.write(json.day + '-' + json.month + '-' + json.year, JSON.stringify(data));
+	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
+	popupLeft.style.display = 'none';
+});
+
+
+
+inputMessage.onkeypress = function(e) {
+	if (!e) e = window.event;
+	if (e.keyCode == '13') {
+		message.innerText = inputMessage.value;
+		message.style.display = 'block';
+		inputMessage.style.display = 'none';
+		return false;
+	}
+}
+
+inputPeople.onkeypress = function(e) {
+	if (!e) e = window.event;
+	if (e.keyCode == '13') {
+		people.innerText = inputPeople.value;
+		people.style.display = 'block';
+		inputPeople.style.display = 'none';
+		return false;
+	}
+}
+
+message.addEventListener('click', function(e) {
+	inputMessage.value = message.innerText;
+	message.style.display = 'none';
+	inputMessage.style.display = 'block';	
+});
+
+people.addEventListener('click', function(e) {
+	inputPeople.value = people.innerText;
+	people.style.display = 'none';
+	inputPeople.style.display = 'block';
+});
 
 // Hardcoding
 function fillData(key) {
 	GLOBAL_KEY = key;
-	var message = document.getElementById('message-of-calendar');	
-	var people = document.getElementById('people-of-calendar');	
-	var description = document.getElementById('description-of-calendar');	
 
 	message.style.display = 'none';
 	inputMessage.style.display = 'block';
 	people.style.display = 'none';
 	inputPeople.style.display = 'block';
-	description.style.display = 'none';
-	inputDescription.style.display = 'block';
 
 	var data = storage.read(key);
 	var _json = JSON.parse(data);
@@ -167,9 +214,7 @@ function fillData(key) {
 		}
 
 		if (jsonData.description != null) {
-			description.style.display = 'block';
-			description.innerText = jsonData.description;
-			inputDescription.style.display = 'none';
+			inputDescription.value = jsonData.description;
 		}
 	}
 }

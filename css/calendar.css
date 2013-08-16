@@ -45,6 +45,11 @@
 	margin-bottom: 5px;
 }
 
-#message-of-calendar, #people-of-calendar, #description-of-calendar {
+#message-of-calendar, #people-of-calendar {
 	display: none;
+	margin-top: 5px;
+}
+
+#people-of-calendar {
+	font-size: 12px;
 }
