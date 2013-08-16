@@ -39,3 +39,8 @@
 	border: 2px solid #0092f4 !important;
 	background: #b8dcf4;
 }
+
+#date-of-calendar {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}

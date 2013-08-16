@@ -32,7 +32,6 @@
 
 	Calendar.Storage.Stream.prototype.delete = function(key) {
 		if (!this.storage) return;
-
 		localStorage.removeItem(key);
 	};
 

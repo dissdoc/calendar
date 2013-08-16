@@ -1,20 +1,23 @@
 var calendar = new Calendar.Loader.HtmlLoader('calendar');
-calendar.generate();
-calendar.initDaysOfWeek();
-
 var date = new Calendar.Dater.Datetime();
 var parser = new Calendar.Dater.Parser();
 var storage = new Calendar.Storage.Stream();
+var stream = new Calendar.Loader.Stream(storage);
+
+// 
+// calendar.initDaysOfWeek();
 
 var day = date.getDay();
 var month = date.getMonth();
 var year = date.getYear();
 
+calendar.generate();
+stream.fillCells(date.getDays(year, month, day), month, year);
+calendar.initDays(storage, day, month, year);
+calendar.fillAllIdeas(month, year, storage);
+
 var headerMonth = document.getElementsByClassName('month-title')[0];
 headerMonth.innerText = date.getHeaderDate(month, year);
-
-calendar.fillDays(date.getDays(year, month, day), day);
-calendar.fillAllIdeas(month, year, storage);
 
 var rightBtn = document.getElementById('right-button');
 var leftBtn = document.getElementById('left-button');
@@ -31,8 +34,8 @@ rightBtn.addEventListener('click', function(e) {
 	var DAY = month == date.getMonth() ? date.getDay() : 0;
 
 	calendar.clearDays();
-	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), DAY);	
+	stream.fillCells(date.getDays(year, month, day), month, year);
+	calendar.initDays(storage, DAY, month, year);
 	headerMonth.innerText = date.getHeaderDate(month, year);
 	calendar.fillAllIdeas(month, year, storage);	
 });
@@ -48,8 +51,8 @@ leftBtn.addEventListener('click', function(e) {
 	var DAY = month == date.getMonth() ? date.getDay() : 0;
 
 	calendar.clearDays();
-	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), DAY);
+	stream.fillCells(date.getDays(year, month, day), month, year);
+	calendar.initDays(storage, DAY, month, year);
 	headerMonth.innerText = date.getHeaderDate(month, year);
 	calendar.fillAllIdeas(month, year, storage);
 });
@@ -60,8 +63,8 @@ currentBtn.addEventListener('click', function(e) {
 	year = date.getYear();	
 
 	calendar.clearDays();
-	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), day);	
+	stream.fillCells(date.getDays(year, month, day), month, year);
+	calendar.initDays(storage, day, month, year);
 	headerMonth.innerText = date.getHeaderDate(month, year);
 	calendar.fillAllIdeas(month, year, storage);
 });
@@ -97,7 +100,7 @@ addBtn.addEventListener('click', function(e) {
 	var DATA = {'message': message, 'people': null, 'description': null};
 
 	storage.write(KEY, JSON.stringify(DATA));
-	calendar.setIdea(KEY, DATA);			
+	calendar.setIdea(storage, KEY, DATA);			
 
 	popupTop.style.display = 'none';
 	addIdea.className = 'action border';
@@ -112,8 +115,8 @@ var createBtn = document.getElementById('create-full-idea');
 closeLeft.addEventListener('click', function(e) {
 	popupLeft.style.display = 'none';
 	calendar.clearDays();
-	calendar.initDaysOfWeek();
-	calendar.fillDays(date.getDays(year, month, day), day);	
+	stream.fillCells(date.getDays(year, month, day), month, year);
+	calendar.initDays(storage, day, month, year);
 	headerMonth.innerText = date.getHeaderDate(month, year);
 	calendar.fillAllIdeas(month, year, storage);
 });

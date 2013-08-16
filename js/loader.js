@@ -6,7 +6,6 @@
 	
 	Calendar.Loader.HtmlLoader = function(id) {
 		this._parent = document.getElementById(id);
-		this.cash_cells = [];
 	};
 
 	/**
@@ -53,55 +52,29 @@
 		}		
 	};
 
-	Calendar.Loader.HtmlLoader.prototype.initDaysOfWeek = function() {
-		var cells = this._parent.rows[0].cells;
+	Calendar.Loader.HtmlLoader.prototype.initDays = function(storage, day, month, year) {
+		for (var i = 0; i < this._parent.rows.length; i++) {
+			for (var j = 0; j < this._parent.rows[i].cells.length; j++) {
+				var data = storage.read(i + '-' + j);
+				if (data == null) continue;
 
-		for (var column = 0; column < cells.length; column++) {
-			var span = document.createElement('span');
-			span.innerText = Calendar.dayOfWeek[column] + ",";
-			var div = document.createElement('div');
-			div.appendChild(span);
-			cells[column].appendChild(div);
-		}
-	};
+				var jsonData = JSON.parse(data);
+				var cell = this._parent.rows[i].cells[j];
 
-	Calendar.Loader.HtmlLoader.prototype.fillDays = function(array, day) {
-		this.cash_cells = [];
+				var span = document.createElement('span');
+				span.innerText = jsonData.week != null ? 
+								 jsonData.week + ', ' + jsonData.day : 
+								 jsonData.day;
+				var div = document.createElement('div');
+				div.appendChild(span);
 
-		for (var rows = 0; rows < 5; rows++) {
-			for (var columns = 0; columns < 7; columns++) {
-				var cash_item = {};				
-
-				var el = this._parent.rows[rows].cells[columns];
-				var value = array.shift();
-
-				cash_item['element'] = el;
-				cash_item['value'] = value;
-
-				if (rows == 0) {					
-					var span = el.getElementsByTagName('span')[0];
-					span.innerText = span.innerText + " " + value;
-
-					if (value < 8 && value == day) {
-						el.className = el.className + ' current-date';
-					} 
-				} else {
-					var span = document.createElement('span');
-					span.innerText = value;
-					var div = document.createElement('div');
-					div.appendChild(span);
-					el.appendChild(div);
-
-					if (value == day) {
-						el.className = el.className + ' current-date';	
-					}
-				}
-
-				this.cash_cells.push(cash_item);
+				if (jsonData.month == month && jsonData.year == year && jsonData.day == day)
+					cell.className = cell.className + ' current-date';
+				cell.appendChild(div);
 			}
-		}		
-	};
-
+		}
+	}
+	
 	Calendar.Loader.HtmlLoader.prototype.clearDays = function() {
 		for (var rows = 0; rows < 5; rows++) {
 			for (var columns = 0; columns < 7; columns++) {
@@ -113,89 +86,108 @@
 		}
 	};
 
-	Calendar.Loader.HtmlLoader.prototype.setIdea = function(key, data) {
+	Calendar.Loader.HtmlLoader.prototype.setIdea = function(storage, key, data) {
 		var dateKey = key.split('-');
 		var d = parseInt(dateKey[0]);
 		var m = parseInt(dateKey[1]);
-
 		if (m != new Date().getMonth()) return;
 
-		var start_index = 0;
+		for (var i = 0; i < this._parent.rows.length; i++) {
+			for (var j = 0; j < this._parent.rows[i].cells.length; j++) {
+				var _data = storage.read(i + '-' + j);
+				if (_data == null) continue;
 
-		// Find need cell start
-		for (var item in this.cash_cells) {
-			var cell = this.cash_cells[item];
-			if (item == 0 && cell.value > 1) {
-				continue;
-			}
+				var jsonData = JSON.parse(_data);
+				if (m != jsonData.month) continue;
 
-			if (cell.value == 1) {
-				start_index = item;
-				break;
+				if (jsonData.day == d) {
+					var cell = this._parent.rows[i].cells[j];
+					var div = document.createElement('div');
+					var header = document.createElement('strong');
+					header.innerText = data.message;
+					div.appendChild(header);
+					cell.appendChild(div);
+					cell.className = cell.className + ' idea';
+					break;
+				}
 			}
-		}		
-
-		for (var i = start_index; i < this.cash_cells.length; i++) {
-			var cell = this.cash_cells[i];
-			if (cell.value == d) {
-				var div = document.createElement('div');
-				var header = document.createElement('strong');
-				header.innerText = data.message;
-				div.appendChild(header);
-				cell.element.appendChild(div);
-				cell.element.className = cell.element.className + ' idea';
-				break;
-			}
-		}
+		}	
 	};
 
 	Calendar.Loader.HtmlLoader.prototype.fillAllIdeas = function(month, year, storage) {
-		var days = new Date(year, month, 0).getDate();
-		
-		var start_index = 0;
+		for (var i = 0; i < this._parent.rows.length; i++) {
+			for (var j = 0; j < this._parent.rows[i].cells.length; j++) {
+				var data = storage.read(i + '-' + j);
+				if (data == null) continue;
 
-		// Find need cell start
-		for (var item in this.cash_cells) {
-			var cell = this.cash_cells[item];
-			if (item == 0 && cell.value > 1) {
-				continue;
-			}
+				var jsonData = JSON.parse(data);
+				var dataStorage = storage.read(jsonData.day + '-' + jsonData.month + '-' + jsonData.year);
+				if (dataStorage == null) continue;
 
-			if (cell.value == 1) {
-				start_index = item;
-				break;
-			}
-		}	
-
-		var current_day = 1;
-		for (var i = start_index; i < this.cash_cells.length; i++) {
-			if (current_day == days) break;
-			
-			var cell = this.cash_cells[i];
-			var dataStorage = storage.read(current_day + '-' + month + '-' + year);
-			if (dataStorage != null) {
-				var data = JSON.parse(dataStorage);
+				var cell = this._parent.rows[i].cells[j];
+				var json = JSON.parse(dataStorage);
 
 				var div = document.createElement('div');
 				
 				var header = document.createElement('strong');
-				header.innerText = data.message;
+				header.innerText = json.message;
 				div.appendChild(header);
 
 				var p1 = document.createElement('p');
-				p1.innerText = data.people;
+				p1.innerText = json.people;
 				div.appendChild(p1);
 
 				var p2 = document.createElement('p');
-				p2.innerText = data.description;
+				p2.innerText = json.description;
 				div.appendChild(p2);
 
-				cell.element.appendChild(div);
-				cell.element.className = cell.element.className + ' idea';
+				cell.appendChild(div);
+				cell.className = cell.className + ' idea';
 			}
-
-			current_day++;
-		}		
+		}	
 	};
+
+	Calendar.Loader.Stream = function(storage) {
+		this.storage = storage;
+	};
+
+	Calendar.Loader.Stream.prototype.fillCells = function(array, month, year) {
+		for (var i = 0; i < 5; i++) {
+			for (var j = 0; j < 7; j++) {
+				var value = array.shift();
+				var data = {
+					'day': value,
+					'month': month, 
+					'year': year,
+					'week': null	
+				};
+				
+				if (i == 0) {
+					if (value > 7) {
+						if (month == 0) {
+							data['month'] = 11;
+							data['year'] = year - 1;
+						} else {
+							data['month'] = month - 1;	
+						}
+					}	
+
+					data['week'] = Calendar.dayOfWeek[j];				
+				} else if (i == 4 && value < 10) {
+					if (month == 11) {
+						data['month'] = 0;
+						data['year'] = year + 1;
+					} else {
+						data['month'] = month + 1;
+					}
+				} else {
+					data['month'] = month;
+					data['year'] = year;
+				}
+
+				this.storage.write(i + '-' + j, JSON.stringify(data));
+			}
+		}
+	}
 
 }());
