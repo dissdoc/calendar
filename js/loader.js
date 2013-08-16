@@ -37,6 +37,15 @@
 					}						
 				});
 
+				td.addEventListener('click', function(e) {
+					var rect = this.getBoundingClientRect();
+					var popup = document.getElementById('popup-left');
+					popup.style.top = parseInt(rect.top) + "px";
+					popup.style.left = parseInt(rect.right + 10) + "px";
+					popup.style.display = 'block';
+					this.className = this.className + " idea";
+				});
+
 				tr.appendChild(td);	
 			}
 

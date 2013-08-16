@@ -102,3 +102,18 @@ addBtn.addEventListener('click', function(e) {
 	popupTop.style.display = 'none';
 	addIdea.className = 'action border';
 });
+
+/* Show and hide popup left */
+var popupLeft = document.getElementById('popup-left');
+var closeLeft = popupLeft.getElementsByClassName('close')[0];
+var deleteBtn = document.getElementById('delete-full-idea');
+var createBtn = document.getElementById('create-full-idea');
+
+closeLeft.addEventListener('click', function(e) {
+	popupLeft.style.display = 'none';
+	calendar.clearDays();
+	calendar.initDaysOfWeek();
+	calendar.fillDays(date.getDays(year, month, day), day);	
+	headerMonth.innerText = date.getHeaderDate(month, year);
+	calendar.fillAllIdeas(month, year, storage);
+});
