@@ -56,6 +56,7 @@ currentBtn.addEventListener('click', function(e) {
 	headerMonth.innerText = date.getHeaderDate(month, year);
 });
 
+var parser = new Calendar.Dater.Parser();
 
 /* Popup under buttons */
 var addIdea = document.getElementById('add-idea');
@@ -74,6 +75,21 @@ closeTop.addEventListener('click', function(e) {
 });
 
 addBtn.addEventListener('click', function(e) {
+	var fastField = document.getElementById('fast-field');
+	var data = fastField.value.split(',');
+	if (data.length < 3) return;
+
+	var _key = parser.getData(data[0]);
+	if (_key == null) return;
+
+	var message = data[2].trim();
+	if (message.length <= 0) return;
+
+	storage.write(
+			_key.day + "-" + _key.month + "-" + _key.year,
+			JSON.stringify({'message': message, 'people': null, 'description': null})
+		);
+
 	popupTop.style.display = 'none';
 	addIdea.className = 'action border';
 });
