@@ -56,5 +56,23 @@
 
 		return days;
 	};
+
+
+	Calendar.Dater.Parser = function() {
+
+	};
+
+	Calendar.Dater.Parser.prototype.getData = function(str) {
+		var day_month = str.trim().split(' ');
+		if (day_month.length < 2) return null;
+
+		var month = Calendar.fastMonths.indexOf(day_month[1]);
+
+		return {
+			'day': parseInt(day_month[0]), 
+			'month': month, 
+			'year': new Date().getFullYear()
+		};
+	};
 	
 }());
