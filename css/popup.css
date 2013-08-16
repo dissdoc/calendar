@@ -2,6 +2,8 @@
 	border: 1px solid #ddd;
 	position: absolute;
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 	background-color: #fff;	
 	padding: 5px;
 	margin-top: 10px;
@@ -29,7 +31,7 @@
 	top: -9px;
 }
 
-.popup-top .close {
+.close {
 	color: #999;
 	font-size: 9px;
 	font-family: Verdana;
@@ -37,7 +39,39 @@
 	cursor: pointer;
 }
 
-.popup-top .context {
+.context {
 	padding: 10px 20px 20px 20px;
 	width: 260px;
+}
+
+#popup-left {
+	border: 1px solid #ddd;
+	position: absolute;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    padding: 5px; 
+    width: 300px;   
+    display: none;
+}
+
+#popup-left:before, #popup-left:after {
+	content: "";
+	position: absolute;	
+	top: 10px;    
+}
+
+#popup-left:before {
+	border-top: 10px solid rgba(153, 153, 153, 0);
+	border-bottom: 10px solid rgba(153, 153, 153, 0);
+	border-right: 10px solid #ddd;	
+	left: -10px;
+}
+
+#popup-left:after {
+	border-top: 10px solid rgba(255, 255, 255, 0);
+	border-bottom: 10px solid rgba(255, 255, 255, 0);
+	border-right: 10px solid #fff;
+	left: -9px;
 }
