@@ -34,3 +34,8 @@
 #calendar td.item div span.checked {
 	font-weight: bold;
 }
+
+#calendar .idea {
+	border: 2px solid #0092f4 !important;
+	background: #b8dcf4;
+}

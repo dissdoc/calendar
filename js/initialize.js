@@ -85,10 +85,11 @@ addBtn.addEventListener('click', function(e) {
 	var message = data[2].trim();
 	if (message.length <= 0) return;
 
-	storage.write(
-			_key.day + "-" + _key.month + "-" + _key.year,
-			JSON.stringify({'message': message, 'people': null, 'description': null})
-		);
+	var KEY = _key.day + "-" + _key.month + "-" + _key.year;
+	var DATA = {'message': message, 'people': null, 'description': null};
+
+	storage.write(KEY, JSON.stringify(DATA));
+	calendar.setIdea(KEY, DATA);			
 
 	popupTop.style.display = 'none';
 	addIdea.className = 'action border';

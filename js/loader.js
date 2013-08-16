@@ -6,6 +6,7 @@
 	
 	Calendar.Loader.HtmlLoader = function(id) {
 		this._parent = document.getElementById(id);
+		this.cash_cells = [];
 	};
 
 	/**
@@ -56,10 +57,18 @@
 	};
 
 	Calendar.Loader.HtmlLoader.prototype.fillDays = function(array, day) {
+		this.cash_cells = [];
+
 		for (var rows = 0; rows < 5; rows++) {
 			for (var columns = 0; columns < 7; columns++) {
+				var cash_item = {};				
+
 				var el = this._parent.rows[rows].cells[columns];
-				var value = array.shift(); 				
+				var value = array.shift();
+
+				cash_item['element'] = el;
+				cash_item['value'] = value;
+
 				if (rows == 0) {					
 					var span = el.getElementsByTagName('span')[0];
 					span.innerText = span.innerText + " " + value;
@@ -78,6 +87,8 @@
 						el.className = el.className + ' current-date';	
 					}
 				}
+
+				this.cash_cells.push(cash_item);
 			}
 		}		
 	};
@@ -91,6 +102,49 @@
 					
 			}
 		}
+	};
+
+	Calendar.Loader.HtmlLoader.prototype.setIdea = function(key, data) {
+		var dateKey = key.split('-');
+		var d = parseInt(dateKey[0]);
+		var m = parseInt(dateKey[1]);
+
+		if (m != new Date().getMonth()) return;
+
+		var start_index = 0;
+
+		// Find need cell start
+		for (var item in this.cash_cells) {
+			var cell = this.cash_cells[item];
+			if (item == 0 && cell.value > 1) {
+				continue;
+			}
+
+			if (cell.value == 1) {
+				start_index = item;
+				break;
+			}
+		}		
+
+		for (var i = start_index; i < this.cash_cells.length; i++) {
+			var cell = this.cash_cells[i];
+			console.log(cell.value + "  " + d);
+			if (cell.value == d) {
+				console.log('here');
+
+				var div = document.createElement('div');
+				var header = document.createElement('strong');
+				header.innerText = data.message;
+				div.appendChild(header);
+				cell.element.appendChild(div);
+				cell.element.className = cell.element.className + ' idea';
+				break;
+			}
+		}
+	};
+
+	Calendar.Loader.HtmlLoader.prototype.fillAllIdeas = function() {
+
 	};
 
 }());
