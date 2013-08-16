@@ -4,6 +4,8 @@ var parser = new Calendar.Dater.Parser();
 var storage = new Calendar.Storage.Stream();
 var stream = new Calendar.Loader.Stream(storage);
 
+var GLOBAL_KEY = '';
+
 // 
 // calendar.initDaysOfWeek();
 
@@ -113,12 +115,16 @@ var deleteBtn = document.getElementById('delete-full-idea');
 var createBtn = document.getElementById('create-full-idea');
 
 closeLeft.addEventListener('click', function(e) {
+	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
 	popupLeft.style.display = 'none';
-	calendar.clearDays();
-	stream.fillCells(date.getDays(year, month, day), month, year);
-	calendar.initDays(storage, day, month, year);
-	headerMonth.innerText = date.getHeaderDate(month, year);
-	calendar.fillAllIdeas(month, year, storage);
+});
+
+deleteBtn.addEventListener('click', function(e) {
+	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
+	var data = storage.read(GLOBAL_KEY);
+	var json = JSON.parse(data);	
+	storage.delete(json.day + '-' + json.month + '-' + json.year);
+	popupLeft.style.display = 'none';
 });
 
 var inputMessage = document.getElementById('message-full');
@@ -127,6 +133,7 @@ var inputDescription = document.getElementById('description-full');
 
 // Hardcoding
 function fillData(key) {
+	GLOBAL_KEY = key;
 	var message = document.getElementById('message-of-calendar');	
 	var people = document.getElementById('people-of-calendar');	
 	var description = document.getElementById('description-of-calendar');	

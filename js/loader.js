@@ -77,6 +77,32 @@
 			}
 		}
 	}
+
+	Calendar.Loader.HtmlLoader.prototype.updateCell = function(storage, day, month, year, key) {
+		var data = storage.read(GLOBAL_KEY);
+		if (data == null) return;
+
+		var jsonData = JSON.parse(data);
+
+		var table = GLOBAL_KEY.split('-');
+		var row = parseInt(table[0]);
+		var column = parseInt(table[1]);
+
+		var cell = this._parent.rows[row].cells[column];
+		cell.innerText = '';
+		cell.className = 'item';
+
+		var span = document.createElement('span');
+		span.innerText = jsonData.week != null ? 
+						 jsonData.week + ', ' + jsonData.day : 
+						 jsonData.day;
+		var div = document.createElement('div');
+		div.appendChild(span);
+
+		if (jsonData.month == month && jsonData.year == year && jsonData.day == day)
+			cell.className = cell.className + ' current-date';
+		cell.appendChild(div);
+	}
 	
 	Calendar.Loader.HtmlLoader.prototype.clearDays = function() {
 		for (var rows = 0; rows < 5; rows++) {
