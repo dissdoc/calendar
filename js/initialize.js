@@ -126,10 +126,10 @@ closeLeft.addEventListener('click', function(e) {
 });
 
 deleteBtn.addEventListener('click', function(e) {
-	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
 	var data = storage.read(GLOBAL_KEY);
 	var json = JSON.parse(data);	
 	storage.delete(json.day + '-' + json.month + '-' + json.year);
+	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
 	popupLeft.style.display = 'none';
 });
 
@@ -147,6 +147,10 @@ createBtn.addEventListener('click', function(e) {
 	storage.write(json.day + '-' + json.month + '-' + json.year, JSON.stringify(data));
 	calendar.updateCell(storage, day, month, year, GLOBAL_KEY);
 	popupLeft.style.display = 'none';
+
+	inputMessage.value = '';
+	inputPeople.value = '';
+	inputDescription.value = '';
 });
 
 
