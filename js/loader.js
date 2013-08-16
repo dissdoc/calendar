@@ -20,6 +20,7 @@
 
 			for (columns = 0; columns < 7; columns++) {
 				var td = document.createElement('td');
+				td.setAttribute('id', rows + '-' + columns);
 				td.className = 'item';
 
 				td.addEventListener('mouseover', function(e) {
@@ -43,6 +44,8 @@
 					popup.style.left = parseInt(rect.right + 10) + "px";
 					popup.style.display = 'block';
 					this.className = this.className + " idea";
+
+					fillData(this.getAttribute('id'));
 				});
 
 				tr.appendChild(td);	
@@ -80,8 +83,7 @@
 			for (var columns = 0; columns < 7; columns++) {
 				var el = this._parent.rows[rows].cells[columns];
 				el.innerText = '';
-				el.className = 'item';
-					
+				el.className = 'item';					
 			}
 		}
 	};

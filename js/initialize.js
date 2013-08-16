@@ -120,3 +120,49 @@ closeLeft.addEventListener('click', function(e) {
 	headerMonth.innerText = date.getHeaderDate(month, year);
 	calendar.fillAllIdeas(month, year, storage);
 });
+
+var inputMessage = document.getElementById('message-full');
+var inputPeople = document.getElementById('people-full');
+var inputDescription = document.getElementById('description-full');
+
+// Hardcoding
+function fillData(key) {
+	var message = document.getElementById('message-of-calendar');	
+	var people = document.getElementById('people-of-calendar');	
+	var description = document.getElementById('description-of-calendar');	
+
+	message.style.display = 'none';
+	inputMessage.style.display = 'block';
+	people.style.display = 'none';
+	inputPeople.style.display = 'block';
+	description.style.display = 'none';
+	inputDescription.style.display = 'block';
+
+	var data = storage.read(key);
+	var _json = JSON.parse(data);
+	var dataStorage = storage.read(_json.day + '-' + _json.month + '-' + _json.year);
+
+	var dateCalendar = document.getElementById('date-of-calendar');
+	dateCalendar.innerText = _json.day + ' ' + Calendar.fastMonths[_json.month];
+
+	if (dataStorage != null) {
+		var jsonData = JSON.parse(dataStorage);
+		if (jsonData.message != null) {			
+			message.style.display = 'block';
+			message.innerText = jsonData.message;
+			inputMessage.style.display = 'none';			
+		}
+
+		if (jsonData.people != null) {
+			people.style.display = 'block';
+			people.innerText = jsonData.people;
+			inputPeople.style.display = 'none';
+		}
+
+		if (jsonData.description != null) {
+			description.style.display = 'block';
+			description.innerText = jsonData.description;
+			inputDescription.style.display = 'none';
+		}
+	}
+}
